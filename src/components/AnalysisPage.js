@@ -7,13 +7,13 @@ const AnalysisPage = ({ dayData, periodStarts, theme, onBack }) => {
     const smartAlerts = useMemo(() => {
         const alerts = [];
         const sortedData = Object.entries(dayData).sort((a, b) => new Date(a[0]) - new Date(b[0]));
-
+        
         Object.keys(SMART_MESSAGES).forEach(key => {
             let consecutive = 0;
             sortedData.forEach(([, data]) => {
                 const isMood = MOODS.some(m => m.id === key);
                 const isSymptom = ALL_SYMPTOMS.some(s => s.id === key);
-
+                
                 let conditionMet = false;
                 if(isMood) conditionMet = data.mood === key;
                 if(isSymptom) conditionMet = data.symptoms?.includes(key);
@@ -42,7 +42,7 @@ const AnalysisPage = ({ dayData, periodStarts, theme, onBack }) => {
         <div className="bg-white p-6 rounded-3xl shadow-lg animate-modal-pop-in">
             <button onClick={onBack} className={`mb-4 flex items-center font-semibold ${theme.primaryIcon}`}><ChevronLeft/> Volver al Calendario</button>
             <h2 className={`text-2xl font-bold ${theme.headerText} mb-6`}>Análisis de tu Ciclo</h2>
-
+            
             {smartAlerts.length > 0 && <div className="mb-6 space-y-2">{smartAlerts.map(alert => <div key={alert.id} className="bg-yellow-100 border-l-4 border-yellow-400 text-yellow-800 p-3 rounded-lg text-sm">{alert.msg}</div>)}</div>}
 
             <div className="mb-6">
@@ -58,7 +58,7 @@ const AnalysisPage = ({ dayData, periodStarts, theme, onBack }) => {
                     </ul>
                 </div>
             </div>
-
+            
              <div className="mb-6">
                 <h3 className={`text-xl font-bold ${theme.secondaryText} mb-4`}>🌙 Conoce tu Fase Lútea</h3>
                 <div className="text-sm text-gray-700 bg-purple-50 p-4 rounded-lg">
@@ -72,14 +72,29 @@ const AnalysisPage = ({ dayData, periodStarts, theme, onBack }) => {
                     </ul>
                 </div>
             </div>
-
+            
             <div>
                 <h3 className={`text-lg font-semibold ${theme.secondaryText} mb-2`}>Cronología de Registros</h3>
                 <div className="space-y-2 max-h-60 overflow-y-auto pr-2">
                     {Object.entries(dayData).sort((a, b) => new Date(b[0]) - new Date(a[0])).map(([date, data]) => {
                          const mood = MOODS.find(m => m.id === data.mood);
-                         const symptoms = data.symptoms?.map(id => ALL_SYMPTOMS.find(s => s.id === id)?.icon).join(' ');
-                         return <div key={date} className="text-xs bg-gray-50 p-2 rounded-lg">{new Intl.DateTimeFormat('es-ES', { dateStyle: 'medium' }).format(new Date(date + 'T00:00:00'))}: {mood?.icon} {symptoms} {data.note && `"${data.note}"`}</div>
+                         const symptoms = data.symptoms?.map(id => ALL_SYMPTOMS.find(s => s.id === id)?.icon);
+                         return (
+                            <div key={date} className="text-xs bg-gray-50 p-2 rounded-lg flex items-center flex-wrap">
+                                <span className="font-semibold mr-2">{new Intl.DateTimeFormat('es-ES', { dateStyle: 'medium' }).format(new Date(date + 'T00:00:00'))}:</span>
+                                {mood && (
+                                    typeof mood.icon === 'string' && mood.icon.startsWith('/')
+                                        ? <img src={mood.icon} alt={mood.label} className="w-4 h-4 mr-1" />
+                                        : <span className="mr-1">{mood.icon}</span>
+                                )}
+                                {symptoms && symptoms.map((icon, index) => (
+                                    typeof icon === 'string' && icon.startsWith('/') 
+                                        ? <img key={index} src={icon} alt="" className="w-4 h-4" /> 
+                                        : <span key={index}>{icon}</span>
+                                ))}
+                                {data.note && <span className="italic ml-2">"{data.note}"</span>}
+                            </div>
+                         )
                     })}
                 </div>
             </div>

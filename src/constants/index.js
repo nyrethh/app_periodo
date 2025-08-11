@@ -19,7 +19,7 @@ export const THEMES = {
     toggleOn: 'bg-pink-400'
      },
 
-   sunnyMeadow:
+  sunnyMeadow:
    { 
     name: 'Prado Soleado',
     bg: 'bg-yellow-50',
@@ -55,7 +55,14 @@ export const THEMES = {
 export const INITIAL_SYMPTOMS = [ { id: 'cramps', label: 'Cólicos', icon: '😖' }, { id: 'bloating', label: 'Hinchazón', icon: '🎈' }, { id: 'cravings', label: 'Antojos', icon: '🍫' }, { id: 'mood_swings', label: 'Cambios de humor', icon: '🎭' }, { id: 'headache', label: 'Dolor de cabeza', icon: '🤕' }, { id: 'fatigue', label: 'Cansancio', icon: '😴' }];
 export const MORE_SYMPTOMS = [ { id: 'acne', label: 'Acné', icon: '🌋' }, { id: 'migraine', label: 'Migraña', icon: '😵' }, { id: 'dizziness', label: 'Mareos', icon: '💫' }, { id: 'fever', label: 'Fiebre', icon: '🤒' }, { id: 'gas', label: 'Gases', icon: '💨' }, { id: 'belly_pain', label: 'Dolor de vientre', icon: '💥' }, { id: 'constipation', label: 'Estreñimiento', icon: '🧱' }, { id: 'breast_pain', label: 'Dolor de senos', icon: '🍈' }, { id: 'back_pain', label: 'Dolor de espalda', icon: '🚶‍♀️' }, { id: 'nausea', label: 'Náuseas', icon: '🤢' }, { id: 'chills', label: 'Escalofríos', icon: '🥶' }, { id: 'hot_flashes', label: 'Sofocos', icon: '🥵' }, { id: 'irritation', label: 'Irritación', icon: '😠' }, { id: 'diarrhea', label: 'Diarrea', icon: '🚽' }];
 export const ALL_SYMPTOMS = [...INITIAL_SYMPTOMS, ...MORE_SYMPTOMS];
-export const MOODS = [ { id: 'happy', label: 'Feliz', icon: '😊' }, { id: 'sad', label: 'Triste', icon: '😢' }, { id: 'angry', label: 'Enojada', icon: '😠' }, { id: 'anxious', label: 'Ansiosa', icon: '😟' }, { id: 'calm', label: 'Calmada', icon: '😌' }];
+export const MOODS = [
+    { id: 'happy', label: 'Feliz', icon: '/images/feliz.svg' },
+    { id: 'sad', label: 'Triste', icon: '/images/triste.svg' },
+    { id: 'angry', label: 'Enojada', icon: '/images/enojada.svg' },
+    { id: 'anxious', label: 'Ansiosa', icon: '/images/ansiosa.svg' },
+    { id: 'calm', label: 'Calmada', icon: '/images/calmada.svg' },
+];
 export const FLOW_TYPES = [ { id: 'dry', label: 'Seco' }, { id: 'sticky', label: 'Pegajoso' }, { id: 'creamy', label: 'Cremoso' }, { id: 'watery', label: 'Acuoso' }, { id: 'egg_white', label: 'Clara de huevo' }, { id: 'spotting', label: 'Con sangre' }];
 export const WEEK_DAYS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
 export const AVATARS = { rabbit: ({...props}) => <Rabbit {...props} />, cat: ({...props}) => <Cat {...props} /> };
+
