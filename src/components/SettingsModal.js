@@ -1,0 +1,26 @@
+import React, { useState } from 'react';
+import { X, User, Repeat, Bell, Rabbit, Cat } from 'lucide-react';
+
+const SettingsModal = ({ onClose, onSave, theme, currentSettings }) => {
+    const [settings, setSettings] = useState(currentSettings);
+    const handleSave = () => { onSave(settings); onClose(); };
+    const handleChange = (field, value) => setSettings(prev => ({...prev, [field]: value}));
+    const handleNotifChange = (field, value) => setSettings(prev => ({...prev, notifications: {...prev.notifications, [field]: value}}));
+
+    return (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50 p-4">
+            <div className="bg-white rounded-3xl shadow-2xl p-6 w-full max-w-md transform transition-all scale-95 animate-modal-pop-in">
+                <div className="flex justify-between items-center mb-6"><h2 className={`text-2xl font-bold ${theme.modalHeader} font-sans`}>Configuración</h2><button onClick={onClose} className="text-gray-400 hover:text-pink-500 transition-colors"><X size={28} /></button></div>
+                <div className="space-y-6 max-h-[70vh] overflow-y-auto pr-2">
+                    <div><h3 className={`text-lg font-semibold ${theme.secondaryText} mb-3 flex items-center`}><User className="mr-2"/>Tu Perfil</h3><div className="space-y-2"><input type="text" value={settings.userName} onChange={(e) => handleChange('userName', e.target.value)} placeholder="Nombre" className="w-full p-2 border-2 border-gray-200 rounded-lg"/><input type="number" value={settings.userAge} onChange={(e) => handleChange('userAge', e.target.value)} placeholder="Edad" className="w-full p-2 border-2 border-gray-200 rounded-lg"/><div className="flex gap-2"><input type="number" value={settings.userWeight} onChange={(e) => handleChange('userWeight', e.target.value)} placeholder="Peso (kg)" className="w-1/2 p-2 border-2 border-gray-200 rounded-lg"/><input type="number" value={settings.userHeight} onChange={(e) => handleChange('userHeight', e.target.value)} placeholder="Altura (cm)" className="w-1/2 p-2 border-2 border-gray-200 rounded-lg"/></div></div></div>
+                    <div><h3 className={`text-lg font-semibold ${theme.secondaryText} mb-3 flex items-center`}><Repeat className="mr-2"/>Tu Ciclo</h3><div className="space-y-2"><div><label className="block text-sm text-gray-600 mb-1">Duración del ciclo (días)</label><input type="number" value={settings.avgCycleLength} onChange={(e) => handleChange('avgCycleLength', e.target.value)} className="w-full p-2 border-2 border-gray-200 rounded-lg"/></div><div><label className="block text-sm text-gray-600 mb-1">Duración del periodo (días)</label><input type="number" value={settings.avgPeriodLength} onChange={(e) => handleChange('avgPeriodLength', e.target.value)} className="w-full p-2 border-2 border-gray-200 rounded-lg"/></div></div></div>
+                    <div><h3 className={`text-lg font-semibold ${theme.secondaryText} mb-3 flex items-center`}><Bell className="mr-2"/>Notificaciones</h3><div className="space-y-3"><div className="flex justify-between items-center"><label>Se acerca tu periodo</label><input type="checkbox" checked={settings.notifications.period} onChange={(e) => handleNotifChange('period', e.target.checked)} className="h-5 w-5 rounded"/></div><div className="flex justify-between items-center"><label>Días de ovulación</label><input type="checkbox" checked={settings.notifications.ovulation} onChange={(e) => handleNotifChange('ovulation', e.target.checked)} className="h-5 w-5 rounded"/></div><div className="flex justify-between items-center"><label>Recordatorio de pastillas</label><input type="checkbox" checked={settings.notifications.medication} onChange={(e) => handleNotifChange('medication', e.target.checked)} className="h-5 w-5 rounded"/></div><div className="flex justify-between items-center"><label>Hora de notificación</label><input type="time" value={settings.notifications.time} onChange={(e) => handleNotifChange('time', e.target.value)} className="p-1 border-2 border-gray-200 rounded-lg"/></div></div></div>
+                    <div><h3 className={`text-lg font-semibold ${theme.secondaryText} mb-3 flex items-center`}>Tu Compañero</h3><div className="flex justify-center gap-4"><button onClick={() => handleChange('avatar', 'rabbit')} className={`p-4 rounded-full transition-all ${settings.avatar === 'rabbit' ? 'bg-pink-300 scale-110' : 'bg-pink-100'}`}><Rabbit size={40} className="text-pink-600"/></button><button onClick={() => handleChange('avatar', 'cat')} className={`p-4 rounded-full transition-all ${settings.avatar === 'cat' ? 'bg-purple-300 scale-110' : 'bg-purple-100'}`}><Cat size={40} className="text-purple-600"/></button></div></div>
+                </div>
+                <div className="mt-8 text-center"><button onClick={handleSave} className={`bg-gradient-to-br ${theme.buttonGradient} text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all`}>Guardar</button></div>
+            </div>
+        </div>
+    );
+};
+
+export default SettingsModal;
